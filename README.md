@@ -56,7 +56,7 @@ Combined and quality-controlled data ready for analysis can be found in *Data* f
 
 2. **Correlation analysis**:
 ```bash
-Obtaining correlation coefficient values (example):
+#Obtaining correlation coefficient values (example):
 corr_matrix = Data %>%
   group_by(type_w, well_type, Analyte) %>%
   summarise(near_d = cor(log(daily_mean), log(nearest_distance_m)), sum_d = cor(log(daily_mean), log(closest_well_dist_sum), use = "complete.obs"),
