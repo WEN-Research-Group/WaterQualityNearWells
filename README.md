@@ -38,39 +38,39 @@ Authors don't have permission to share raw data associated with oil and gas well
 
 ### Processed Data 
 
+Water quality data underwent rigorous quality control before analysis. We retained only samples from natural surface water (rivers, streams) and groundwater (seeps, springs, wells) sources, excluding anthropogenic or potentially stagnant sources. Samples flagged as rejected or contaminated, measurements below detection limits, and outliers identified through manual inspection were removed to ensure data reliability. Data quality control steps are detailed in the manuscript Methods section.
+
 Combined and quality-controlled data ready for analysis can be found in *Data* folder.
 
-Data collection methods and quality control procedures are detailed in the manuscript Methods section.
+### Analysis
 
-Water quality data underwent rigorous quality control before analysis. We retained only samples from natural surface water (rivers, streams) and groundwater (seeps, springs, wells) sources, excluding anthropogenic or potentially stagnant sources. Samples flagged as rejected or contaminated, measurements below detection limits, and outliers identified through manual inspection were removed to ensure data reliability.
-
-## Reproducing the Analysis
-
-1. **Data Cleaning**: 
+1. **Calculating Spatial Proxies**: 
 ```bash
-   Rscript code/01_data_cleaning.R
+   Rscript Well_spatial_analysis_compl_0127.R 
 ```
-   Generates `processed/merged_dataset.csv`
+   Generates a matrix with four spatial proxies associated with each daily analyte sample:
+   1) distance to the closest well (in meters)
+   2) summed distance of 10 closest wells (in meters)
+   3) number of oil and gas wells within 1 kilometer radius from water sampling location
+   4) number of oil and gas wells within 3-kilometer radius from water sampling location
 
-2. **Exploratory Analysis**:
+2. **Correlation analysis**:
 ```bash
-   Rscript code/02_exploratory.R
+Obtaining correlation coefficient values (example):
+corr_matrix = Data %>%
+  group_by(type_w, well_type, Analyte) %>%
+  summarise(near_d = cor(log(daily_mean), log(nearest_distance_m)), sum_d = cor(log(daily_mean), log(closest_well_dist_sum), use = "complete.obs"),
+            den_1km = cor(log(daily_mean[-which(num_well_1km==0)]), log(num_well_1km[-which(num_well_1km==0)])), 
+            den_3km = cor(log(daily_mean[-which(num_well_3km==0)]), log(num_well_3km[-which(num_well_3km==0)])))
 ```
-   Creates Figure 1 and Figure 2
+   We calculated Pearson correlation coefficients (R) between log-transformed daily analyte concentrations and spatial proxies (well proximity/density), with statistical significance defined as p < 0.005. 
+   Correlation results are reported separately for each analyte, spatial proxy, state, well type, and water source.
 
-3. **Model Training**:
+3. **Hierarchical clustering**:
 ```bash
-   python code/03_model_training.py
+   Visualization:  heatmap(corr_matrix, Colv = NA, col = color_t, scale = "none", ColSideColors = state_colors, RowSideColors = well_colors)  #define color themes prior to using this
 ```
-   Trains random forest and gradient boosting models, saves to `results/models/`
-
-4. **Validation**:
-```bash
-   python code/04_validation.py
-```
-   Generates Figure 3, Figure 4, and Table 2
-
-Expected runtime: approximately 15 minutes on a standard desktop computer.
+ We performed hierarchical clustering on correlation results using the heatmap function in R's stats package. This function applies agglomerative clustering using Euclidean distance, iteratively merging the most similar clusters and displaying results via dendrograms. Rows in the correlation matrix were reordered based on clustering to group similar correlation patterns together.
 
 
 ## Citation
