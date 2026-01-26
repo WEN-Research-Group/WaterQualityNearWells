@@ -91,96 +91,6 @@ SW_WQP_Cl_CO = filter(SW_WQP_anal_daily, daily_mean < 30000000 & daily_mean > 1 
 ### COGCC
 #Remove GARFIELD data
 
-
-
-# From Tao's code
-
-# cogcc_wq_raw <- readxl::read_xlsx(path="./input/COGCC_WQ/COGCC_BasicQuery.xlsx",
-#                                   na="") %>% janitor::clean_names()
-# test <- data.frame(table(cogcc_wq_raw$param_description))
-# rm(test)
-# 
-# cogcc_wq_curated <- cogcc_wq_raw %>%
-#   # select only non-NA SC data from relevant surface water and
-#   # groundwater samples
-#   filter(param_description %in%
-#            c("CHLORIDE", "SODIUM"),
-#          facility_type %in%
-#            c("Creek","Domestic Well", "Ground Water", "Groundwater",
-#              "Monitoring Well", "Pond", "River", "Seep", "Spring",
-#              "Surface Water"),
-#          !matrix %in% c("GAS", "LIQUID", "SOIL"),
-#          !is.na(result_value),
-#          !units == "mg/L as CaCO3") %>%
-#   # convert all units to ug/L
-#   mutate(result_value = ifelse(units %in% c("mg/Kg","mg/l","mg/L", "MG/L"),
-#                                result_value * 1000, result_value)) %>%
-#   mutate(units = "ug/L") %>%
-#   # add a column 'State'
-#   mutate(State="Colorado") %>%
-#   # select only needed columns and rename them in a way consistent with others
-#   select(c(facility_id, facility_type, latitude83, longitude83, State,
-#            county,sample_date,result_value, param_description)) %>%
-#   rename(SiteCode = facility_id, Latitude = latitude83, Longitude = longitude83,
-#          County = county, Samplingdate = sample_date, Analyte=param_description,
-#          SampleMedium = facility_type, DataValue = result_value) %>%
-#   # derive the day of sampling date
-#   mutate(Samplingdate = floor_date(Samplingdate, "day"))
-# 
-# # separate data into na and cl datasets
-# cogcc_wq_curated.na <- cogcc_wq_curated[cogcc_wq_curated$Analyte == "SODIUM",]
-# cogcc_wq_curated.cl <- cogcc_wq_curated[cogcc_wq_curated$Analyte == "CHLORIDE",]
-# 
-# 
-# # calculate site-level daily average
-# cogcc_wq_curated.na <- cogcc_wq_curated.na %>%
-#   select(-Analyte) %>%
-#   group_by(SiteCode, Latitude, Longitude, State,
-#            County, Samplingdate, SampleMedium) %>%
-#   summarise(daily_sc = mean(DataValue))
-# 
-# cogcc_wq_curated.cl <- cogcc_wq_curated.cl %>%
-#   select(-Analyte) %>%
-#   group_by(SiteCode, Latitude, Longitude, State,
-#            County, Samplingdate, SampleMedium) %>%
-#   summarise(daily_sc = mean(DataValue))
-# 
-# 
-# # extract groundwater and surface water samples
-# gw.cogcc_wq_curated.na <- cogcc_wq_curated.na %>%
-#   filter(SampleMedium %in% c("Domestic Well","Ground Water",
-#                              "Groundwater","Monitoring Well",
-#                              "Seep","Spring")) %>%
-#   select(-SampleMedium)
-# 
-# sw.cogcc_wq_curated.na <- cogcc_wq_curated.na %>%
-#   filter(SampleMedium %in% c("Creek","Pond","River","Surface Water")) %>%
-#   select(-SampleMedium)
-# 
-# saveRDS(gw.cogcc_wq_curated.na, file="./input/COGCC_WQ/gw_cogcc_na_curated.rds",
-#         compress = FALSE)
-# saveRDS(sw.cogcc_wq_curated.na, file="./input/COGCC_WQ/sw_cogcc_na_curated.rds",
-#         compress = FALSE)
-# 
-# 
-# gw.cogcc_wq_curated.cl <- cogcc_wq_curated.cl %>%
-#   filter(SampleMedium %in% c("Domestic Well","Ground Water",
-#                              "Groundwater","Monitoring Well",
-#                              "Seep","Spring")) %>%
-#   select(-SampleMedium)
-# 
-# sw.cogcc_wq_curated.cl <- cogcc_wq_curated.cl %>%
-#   filter(SampleMedium %in% c("Creek","Pond","River","Surface Water")) %>%
-#   select(-SampleMedium)
-# 
-# saveRDS(gw.cogcc_wq_curated.cl, file="./input/COGCC_WQ/gw_cogcc_cl_curated.rds",
-#         compress = FALSE)
-# saveRDS(sw.cogcc_wq_curated.cl, file="./input/COGCC_WQ/sw_cogcc_cl_curated.rds",
-#         compress = FALSE)
-# 
-# 
-
-
 cogcc_wq_raw <- readxl::read_xlsx(path="./input/COGCC_WQ/COGCC_BasicQuery.xlsx",
                                   na="") %>% janitor::clean_names()
 
@@ -477,18 +387,6 @@ SW_unconv$well_type = "unconventional"
 
 plot(log(SW_unconv$nearest_distance_m), log(SW_unconv$daily_mean))
 cor(log(SW_unconv$nearest_distance_m), log(SW_unconv$daily_mean))
-
-# #Try remove that value that occurs a lot
-# SW_unconv_val_sum = SW_unconv %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# SW_unconv_nrs = merge(SW_unconv, SW_unconv_val_sum, by = "daily_mean")
-# SW_unconv_nrs_f = filter(SW_unconv_nrs, n_val < 100)
-# plot(log(SW_unconv_nrs_f$nearest_distance_m), log(SW_unconv_nrs_f$daily_mean))
-# cor(log(SW_unconv_nrs_f$nearest_distance_m), log(SW_unconv_nrs_f$daily_mean)) #worse than with outlies
-# #SW_unconv = SW_unconv_nrs_f[,c(1:16)]
 
 
 ### ORPHANED

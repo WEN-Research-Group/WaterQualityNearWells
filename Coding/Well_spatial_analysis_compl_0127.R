@@ -1,7 +1,7 @@
 Well_spatial_analysis_compl_0127 = function(Texas_marginal_short,SW_Na_Texas_merged){
   
-  #Texas_marginal_short = PA_marginal
-  #SW_Na_Texas_merged = SW_Sr_PA_merged
+  #Texas_marginal_short - well dataset: unique wells and their location info
+  #SW_Na_Texas_merged - water quality dataset: sampling locations and detected concentrations
   
   # extract unique lat/long combinations
   marginal.sites <- Texas_marginal_short[!duplicated(Texas_marginal_short[c("Longitude","Latitude")]),] #a lot of columns
@@ -58,9 +58,6 @@ Well_spatial_analysis_compl_0127 = function(Texas_marginal_short,SW_Na_Texas_mer
   
   a1=which(colnames(sw.wq.distance)=="X1")
   a2=which(colnames(sw.wq.distance)=="X1000")
-  #This gives only 1 and 1001 values. It gets confused by data
-  #sw.nearest.well.all.boolean <- as.data.frame(sw.wq.distance[,rep("Samplingdate",1000)] > sw.wq.distance[,a1:a2])
-  #sw.nearest.well.all.boolean$nearest_well_index<-as.data.frame(apply(sw.nearest.well.all.boolean, 1, which.max))
   
   #creating a matrix that finds first FALSE, which is the closest well that was built before sampling event
   sw.nearest.well.all.boolean <- as.data.frame(sw.wq.distance[,rep("Samplingdate",1000)] < sw.wq.distance[,a1:a2])
@@ -87,9 +84,6 @@ Well_spatial_analysis_compl_0127 = function(Texas_marginal_short,SW_Na_Texas_mer
   
   # 1km well density
   sw.nearest.well.all.1km.boolean <- as.data.frame(sw.nearest.well.all.distance[,1:1000] < 1000)
-  #sw.nearest.well.all.1km.boolean <- as.data.frame(sw.nearest.well.all.distance[1:1000] < 1000)
-#  A = sw.nearest.well.all.distance[1:1000]
-#  B = sw.nearest.well.all.distance[,1:1000]
   
   sw.nearest.well.all.1km.boolean$index <- rownames(sw.nearest.well.all.1km.boolean)
   
@@ -97,14 +91,6 @@ Well_spatial_analysis_compl_0127 = function(Texas_marginal_short,SW_Na_Texas_mer
                                            sw.nearest.well.all.1km.boolean,
                                            by="index",
                                            all.x=TRUE)
-  
-#  sw.nearest.well.all.1km.boolean2 <- merge(data.frame(index=sw.wq.distance[,1]),
-#                                           sw.nearest.well.all.1km.boolean,
-#                                           by="index",
-#                                           all.x=TRUE)
-  
-#  sw.nearest.well.all.1km.boolean <- 
-#    select(sw.nearest.well.all.1km.boolean,-index) * select(sw.nearest.well.all.boolean,-nearest_well_index)
   
   sw.nearest.well.all.1km.boolean2 <- 
     select(sw.nearest.well.all.1km.boolean,-index) * sw.nearest.well.all.boolean2
@@ -120,10 +106,7 @@ Well_spatial_analysis_compl_0127 = function(Texas_marginal_short,SW_Na_Texas_mer
                                            all.x=TRUE)
   sw.nearest.well.all.3km.boolean2 <- 
     select(sw.nearest.well.all.3km.boolean,-index) * sw.nearest.well.all.boolean2
-  
-  #post-processing summary table and save it into a rds file
-  # replace 0 distance value with 0.01
-#  sw.wq.distance[sw.wq.distance$nearest_distance_m == 0,"nearest_distance_m"] <- 0.01
+
   
   # calculate # of OG wels within buffer distance
   sw.wq.distance$num_well_1km <- rowSums(sw.nearest.well.all.1km.boolean2)
@@ -138,7 +121,6 @@ Well_spatial_analysis_compl_0127 = function(Texas_marginal_short,SW_Na_Texas_mer
   b2 = which(colnames(sw.wq.distance)=="V1000")
   sw.nearest.well.all.distance_w_NA = sw.wq.distance[,b1:b2]
   for (i in seq(1:1000)){
-    #TF_ = sw.nearest.well.all.boolean2[,i]
     TF_ = sw.nearest.well.all.boolean[,i]
     sw.nearest.well.all.distance_w_NA[TF_==TRUE,i] = NA
   }

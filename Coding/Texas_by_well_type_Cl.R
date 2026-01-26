@@ -185,11 +185,6 @@ unique(gw.twdb.cl_long_clean$ParameterLongDescription)
 #Change units
 gw.twdb.cl_long_clean$DataValue = gw.twdb.cl_long_clean$DataValue * 1000
 
-#gw.twdb.cl_long_clean = gw.twdb.cl_long %>%
-#  filter(is.na(Description) & DataValue > 1) %>%
-#  arrange(DataValue)
-#All values looked reasonable 
-
 #Change date type - already done
 # Reorder columns and drop some
 gw_twdb_cl_clean = gw.twdb.cl_long_clean %>%
@@ -206,11 +201,6 @@ View(TX_GW_TWDB_Cl_part1)
 
 #Remove one largest value - clearly an outlier
 TX_GW_TWDB_Cl_part1 = TX_GW_TWDB_Cl_part1[-dim(TX_GW_TWDB_Cl_part1)[1],]
-
-#Probably will have to change site number type to be as character
-#data_all_short_daily_summary$SiteCode = as.character(data_all_short_daily_summary$SiteCode)
-#TX_GW_TWDB_Na_part1 = data_all_short_daily_summary
-
 
 #Now merge two datasets
 GW_Cl_Texas_merged = rbind(TX_GW_TWDB_Cl_part1,GW_WQP_Cl_clean_TX_daily)
@@ -382,18 +372,6 @@ SW_unconv$well_type = "unconventional"
 plot(log(SW_unconv$nearest_distance_m), log(SW_unconv$daily_mean))
 cor(log(SW_unconv$nearest_distance_m), log(SW_unconv$daily_mean))
 
-# #Try remove that value that occurs a lot
-# SW_unconv_val_sum = SW_unconv %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# SW_unconv_nrs = merge(SW_unconv, SW_unconv_val_sum, by = "daily_mean")
-# SW_unconv_nrs_f = filter(SW_unconv_nrs, n_val < 100)
-# plot(log(SW_unconv_nrs_f$nearest_distance_m), log(SW_unconv_nrs_f$daily_mean))
-# cor(log(SW_unconv_nrs_f$nearest_distance_m), log(SW_unconv_nrs_f$daily_mean)) #worse than with outlies
-# #SW_unconv = SW_unconv_nrs_f[,c(1:16)]
-
 #Double check if duplicated site number samples are removed
 SW_unconv = SW_unconv[-which(SW_unconv$max_v - SW_unconv$min_v > 1000),] 
 #SW_unconv = filter(SW_unconv, daily_mean < 50000)
@@ -470,26 +448,6 @@ GW_marg$well_type = "marginal"
 plot(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
 cor(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
 
-# GW_marg = filter(GW_marg, nearest_distance_m < 6283100)
-# plot(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
-# cor(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
-# 
-# # #Try remove that value that occurs a lot
-# GW_marg_val_sum = GW_marg %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_marg_nrs = merge(GW_marg, GW_marg_val_sum, by = "daily_mean")
-# GW_marg_nrs_f = filter(GW_marg_nrs, n_val < 180) #removed 500, 1000, 5000, 10000, 110000
-# plot(log(GW_marg_nrs_f$nearest_distance_m), log(GW_marg_nrs_f$daily_mean))
-# cor(log(GW_marg_nrs_f$nearest_distance_m), log(GW_marg_nrs_f$daily_mean)) #worse than with outlies
-# GW_marg = GW_marg_nrs_f[,c(1:16)]
-
-# GW_marg = filter(GW_marg, nearest_distance_m > 1)
-# plot(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
-# 
-# dim(unique(GW_marg[,c("Latitude","Longitude", "Samplingdate")])) #38544 in dataset but 36571 unique combos
 GW_marg = GW_marg[-which(GW_marg$max_v - GW_marg$min_v > 1000),] #38517
 plot(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
 
@@ -527,28 +485,6 @@ cor(log(GW_unconv$nearest_distance_m), log(GW_unconv$daily_mean))
 
 GW_unconv = GW_unconv[-which(GW_unconv$max_v - GW_unconv$min_v > 1000),] 
 
-# ## #Try remove that value that occurs a lot
-# GW_unconv_val_sum = GW_unconv %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_unconv_nrs = merge(GW_unconv, GW_unconv_val_sum, by = "daily_mean")
-# GW_unconv_nrs_f = filter(GW_unconv_nrs, n_val < 180) #removed 500, 1000, 5000, 10000, 110000
-# plot(log(GW_unconv_nrs_f$nearest_distance_m), log(GW_unconv_nrs_f$daily_mean))
-# cor(log(GW_unconv_nrs_f$nearest_distance_m), log(GW_unconv_nrs_f$daily_mean)) #worse than with outlies
-# GW_unconv = GW_unconv_nrs_f[,c(1:16)]
-
-# GW_unconv_val_sum = GW_unconv %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_unconv_nrs = merge(GW_unconv, GW_unconv_val_sum, by = "daily_mean")
-# GW_unconv_nrs_f = filter(GW_unconv_nrs, n_val < 100)
-# GW_unconv = GW_unconv_nrs_f[,c(1:16)]
-# plot(log(GW_unconv$nearest_distance_m), log(GW_unconv$daily_mean))
-
 GW_unconv_fx = GW_unconv %>%
   group_by(Latitude, Longitude, Samplingdate) %>%
   summarise(n = sum(n), daily_mean=mean(daily_mean), daily_median = mean(daily_median), min_v=min(min_v), max_v=max(max_v),
@@ -584,28 +520,6 @@ cor(log(GW_orph$nearest_distance_m), log(GW_orph$daily_mean))
 
 GW_orph = GW_orph[-which(GW_orph$max_v - GW_orph$min_v > 1000),] 
 
-# ## #Try remove that value that occurs a lot
-# GW_orph_val_sum = GW_orph %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_orph_nrs = merge(GW_orph, GW_orph_val_sum, by = "daily_mean")
-# GW_orph_nrs_f = filter(GW_orph_nrs, n_val < 180) #removed 500, 1000, 5000, 10000, 110000
-# plot(log(GW_orph_nrs_f$nearest_distance_m), log(GW_orph_nrs_f$daily_mean))
-# cor(log(GW_orph_nrs_f$nearest_distance_m), log(GW_orph_nrs_f$daily_mean)) #worse than with outlies
-# GW_orph = GW_orph_nrs_f[,c(1:16)]
-
-# GW_orph_val_sum = GW_orph %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_orph_nrs = merge(GW_orph, GW_orph_val_sum, by = "daily_mean")
-# GW_orph_nrs_f = filter(GW_orph_nrs, n_val < 100)
-# GW_orph = GW_orph_nrs_f[,c(1:16)]
-# plot(log(GW_orph$nearest_distance_m), log(GW_orph$daily_mean))
-
 GW_orph_fx = GW_orph %>%
   group_by(Latitude, Longitude, Samplingdate) %>%
   summarise(n = sum(n), daily_mean=mean(daily_mean), daily_median = mean(daily_median), min_v=min(min_v), max_v=max(max_v),
@@ -632,11 +546,3 @@ cor(log(GW_orph$nearest_distance_m), log(GW_orph$daily_mean))
 Geospatial_result_TX_Cl = rbind(SW_marg,SW_unconv,SW_orph,GW_marg,GW_unconv,GW_orph)
 
 saveRDS(Geospatial_result_TX_Cl,file = "Geospatial_results_TX_Cl.rds", compress = FALSE)
-
-
-
-
-
-
-
-

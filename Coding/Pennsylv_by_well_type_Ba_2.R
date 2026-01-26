@@ -414,29 +414,6 @@ SW_orph = filter(SW_orph, daily_mean < 1000) #31940 values
 plot(log(SW_orph$nearest_distance_m), log(SW_orph$daily_mean))
 
 
-# SW_orph_val_sum = SW_orph %>%
-#   group_by(daily_mean) %>%
-#   summarise(n = n()) %>%
-#   arrange(n)
-# 
-# 
-# SW_orph_nrs = merge(SW_orph, SW_orph_val_sum, by = "daily_mean")
-#   
-# 
-# #Remove values that repeated more than 50 times and see it those limits are removed
-# 
-# #Keep only values that occured more than 50 time and see how will that impact our correlation results
-# which(gw.wq.distance_SO4_sum$n > 50) 
-# #saving those values 
-# HI_det_N = gw.wq.distance_SO4_sum[which(gw.wq.distance_SO4_sum$n > 50), ]
-# #Keep only those values in the matrix
-# 
-# gw.wq.distance_SO4_Hi_det_Nr = gw.wq.distance_SO4[which(c(gw.wq.distance_SO4$daily_mean) %in% c(data.frame(HI_det_N[,1]))),]
-# gw.wq.distance_SO4_Hi_det_Nr = gw.wq.distance_SO4 %>%
-#   filter(daily_mean %in% c(data.frame(HI_det_N[,1])))
-
-    
-
 #GROUNDWATER
 
 #MARGINAL
@@ -521,41 +498,3 @@ all_wells_PA_nrs = all_wells_PA %>%
   summarise(n = n())
 
 
-
-# Calculating_basic_stats_per_analyte = function(sw.wq.distance,anal, type_w){
-#   #Start with sample info
-#   stats_n = data.frame(0)
-#   #Water type
-#   stats_n[1,1] = anal #type_w 
-#   #Well type
-#   stats_n[1,2] = type_w #well_type
-#   #Variable-analyte
-#   #stats_n[1,3] = type_w  #anal
-#   #Logged ot not?
-#   #stats_n[1,4] = "Non-log"
-#   #number of samples
-#   #stats_n[1,5] = dim(sw.wq.distance)[1]
-#   stats_n[1,3] = dim(sw.wq.distance)[1]
-#   #mean
-#   #stats_n[1,6] = mean(sw.wq.distance$daily_mean)
-#   stats_n[1,4] = mean(sw.wq.distance$daily_mean)
-#   #standard deviation 
-#   stats_n[1,5] = sd(sw.wq.distance$daily_mean)
-#   #median
-#   stats_n[1,6] = median(sw.wq.distance$daily_mean)
-#   #Qualtiles 0, 25, 50, 75, 100
-#   stats_n[1,7:11] = quantile(sw.wq.distance$daily_mean)
-#   #skewness
-#   stats_n[1,12] = skewness(sw.wq.distance$daily_mean)
-#   #variance 
-#   stats_n[1,13] = var(sw.wq.distance$daily_mean)
-#   #Kurtosis
-#   stats_n[1,14] = kurtosis(sw.wq.distance$daily_mean, method="excess")
-# 
-# 
-# return(stats_n)
-# }
-# 
-# 
-# 
-# Geospatial_result_PA_Ba

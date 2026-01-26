@@ -375,18 +375,6 @@ SW_unconv = filter(SW_unconv, nearest_distance_m < 6283100)
 plot(log(SW_unconv$nearest_distance_m), log(SW_unconv$daily_mean))
 cor(log(SW_unconv$nearest_distance_m), log(SW_unconv$daily_mean))
 
-# #Try remove that value that occurs a lot
-# SW_unconv_val_sum = SW_unconv %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# SW_unconv_nrs = merge(SW_unconv, SW_unconv_val_sum, by = "daily_mean")
-# SW_unconv_nrs_f = filter(SW_unconv_nrs, n_val < 100)
-# plot(log(SW_unconv_nrs_f$nearest_distance_m), log(SW_unconv_nrs_f$daily_mean))
-# cor(log(SW_unconv_nrs_f$nearest_distance_m), log(SW_unconv_nrs_f$daily_mean)) #worse than with outlies
-# #SW_unconv = SW_unconv_nrs_f[,c(1:16)]
-
 
 ### ORPHANED
 

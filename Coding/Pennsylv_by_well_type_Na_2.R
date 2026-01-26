@@ -439,16 +439,6 @@ plot(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
 GW_marg = filter(GW_marg, nearest_distance_m > 1)
 plot(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
 
-# GW_marg_val_sum = GW_marg %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# 
-# GW_marg_nrs = merge(GW_marg, GW_marg_val_sum, by = "daily_mean")
-# GW_marg_nrs_f = filter(GW_marg_nrs, n_val < 100)
-# plot(log(GW_marg_nrs_f$nearest_distance_m), log(GW_marg_nrs_f$daily_mean))
-# #GW_marg = GW_marg_nrs_f[,c(1:16)]
 
 ### UNCONVENTIONAL
 
@@ -459,16 +449,6 @@ GW_unconv$type_w = "GW"
 GW_unconv$well_type = "unconventional"
 
 plot(log(GW_unconv$nearest_distance_m), log(GW_unconv$daily_mean))
-
-# GW_unconv_val_sum = GW_unconv %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_unconv_nrs = merge(GW_unconv, GW_unconv_val_sum, by = "daily_mean")
-# GW_unconv_nrs_f = filter(GW_unconv_nrs, n_val < 100)
-# GW_unconv = GW_unconv_nrs_f[,c(1:16)]
-# plot(log(GW_unconv$nearest_distance_m), log(GW_unconv$daily_mean))
 
 
 ### ORPHANED
@@ -481,28 +461,11 @@ GW_orph$well_type = "orphaned"
 
 plot(log(GW_orph$nearest_distance_m), log(GW_orph$daily_mean))
 
-# GW_orph_val_sum = GW_orph %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_orph_nrs = merge(GW_orph, GW_orph_val_sum, by = "daily_mean")
-# GW_orph_nrs_f = filter(GW_orph_nrs, n_val < 100)
-# GW_orph = GW_orph_nrs_f[,c(1:16)]
-# plot(log(GW_orph$nearest_distance_m), log(GW_orph$daily_mean))
-
-#Make sure all outliers are removed before combining into 1 dataset
 
 
 #Combine all 6 into 1 and save
 Geospatial_result_PA_Na = rbind(SW_marg,SW_unconv,SW_orph,GW_marg,GW_unconv,GW_orph)
 
 saveRDS(Geospatial_result_PA_Na,file = "Geospatial_results_PA_Na.rds", compress = FALSE)
-
-
-
-
-
-
 
 

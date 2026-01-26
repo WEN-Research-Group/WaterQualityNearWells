@@ -473,13 +473,6 @@ SW_orph$well_type = "orphaned"
 #SW_orph = filter(SW_orph, daily_mean < 1000) #31940 values
 plot(log(SW_orph$nearest_distance_m), log(SW_orph$daily_mean))
 
-# #Would be good to explore how many sites and if correlation would be stronger if we used site averages
-# SW_orph_sit_nrs = SW_orph %>%
-#   group_by(SiteCode, Latitude, Longitude) %>%
-#   summarise(n_per_site = n(),site_mean = mean(daily_mean), near_dist_site = mean(nearest_distance_m))
-# 
-# plot(log(SW_orph_sit_nrs$near_dist_site), log(SW_orph_sit_nrs$site_mean))
-# cor(log(SW_orph_sit_nrs$near_dist_site), log(SW_orph_sit_nrs$site_mean))
 
 SW_orph = SW_orph[-which(SW_orph$max_v - SW_orph$min_v > 100),] 
 SW_orph = filter(SW_orph, daily_mean < 50000)
@@ -522,16 +515,6 @@ plot(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
 dim(unique(GW_marg[,c("Latitude","Longitude", "Samplingdate")])) #38544 in dataset but 36571 unique combos
 GW_marg = GW_marg[-which(GW_marg$max_v - GW_marg$min_v > 1000),] #38517
 
-# GW_marg_val_sum = GW_marg %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# 
-# GW_marg_nrs = merge(GW_marg, GW_marg_val_sum, by = "daily_mean")
-# GW_marg_nrs_f = filter(GW_marg_nrs, n_val < 100)
-# plot(log(GW_marg_nrs_f$nearest_distance_m), log(GW_marg_nrs_f$daily_mean))
-# #GW_marg = GW_marg_nrs_f[,c(1:16)]
 
 GW_marg_fx = GW_marg %>%
   group_by(Latitude, Longitude, Samplingdate) %>%
@@ -564,15 +547,6 @@ plot(log(GW_unconv$nearest_distance_m), log(GW_unconv$daily_mean))
 
 GW_unconv = GW_unconv[-which(GW_unconv$max_v - GW_unconv$min_v > 1000),] #38517
 
-# GW_unconv_val_sum = GW_unconv %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_unconv_nrs = merge(GW_unconv, GW_unconv_val_sum, by = "daily_mean")
-# GW_unconv_nrs_f = filter(GW_unconv_nrs, n_val < 100)
-# GW_unconv = GW_unconv_nrs_f[,c(1:16)]
-# plot(log(GW_unconv$nearest_distance_m), log(GW_unconv$daily_mean))
 
 GW_unconv_fx = GW_unconv %>%
   group_by(Latitude, Longitude, Samplingdate) %>%
@@ -605,16 +579,6 @@ plot(log(GW_orph$nearest_distance_m), log(GW_orph$daily_mean))
 
 GW_orph = GW_orph[-which(GW_orph$max_v - GW_orph$min_v > 1000),] 
 
-# GW_orph_val_sum = GW_orph %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_orph_nrs = merge(GW_orph, GW_orph_val_sum, by = "daily_mean")
-# GW_orph_nrs_f = filter(GW_orph_nrs, n_val < 100)
-# GW_orph = GW_orph_nrs_f[,c(1:16)]
-# plot(log(GW_orph$nearest_distance_m), log(GW_orph$daily_mean))
-
 GW_orph_fx = GW_orph %>%
   group_by(Latitude, Longitude, Samplingdate) %>%
   summarise(n = sum(n), daily_mean=mean(daily_mean), daily_median = mean(daily_median), min_v=min(min_v), max_v=max(max_v),
@@ -641,11 +605,5 @@ plot(log(GW_orph$nearest_distance_m), log(GW_orph$daily_mean))
 Geospatial_result_PA_SC = rbind(SW_marg,SW_unconv,SW_orph,GW_marg,GW_unconv,GW_orph)
 
 saveRDS(Geospatial_result_PA_SC,file = "Geospatial_results_PA_SC.rds", compress = FALSE)
-
-
-
-
-
-
 
 

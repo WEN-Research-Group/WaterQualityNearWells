@@ -253,15 +253,6 @@ plot(log(SW_marg$nearest_distance_m), log(SW_marg$daily_mean))
 cor(log(SW_marg$nearest_distance_m), log(SW_marg$daily_mean))
 points(c(11,12),c(4.5,6),pch = 1,col = "red")
 
-#Remove those weirdly low values
-#Remove values that are log(nearest_distance_m) < 11
-#AND log(daily_mean) < 5
-
-# which(c(T,T) & c(F,T))
-# 
-# SW_marg_filt = filter(SW_marg,! log(daily_mean) < 5 & log(nearest_distance_m) < 11)
-# plot(log(SW_marg_filt$nearest_distance_m), log(SW_marg_filt$daily_mean))
-
 SW_marg_filt2 = SW_marg[-which(log(SW_marg$daily_mean) < 5 & log(SW_marg$nearest_distance_m) < 11),]
 plot(log(SW_marg_filt2$nearest_distance_m), log(SW_marg_filt2$daily_mean))
 cor(log(SW_marg_filt2$nearest_distance_m), log(SW_marg_filt2$daily_mean))

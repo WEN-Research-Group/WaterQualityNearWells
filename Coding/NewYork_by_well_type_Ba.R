@@ -103,11 +103,9 @@ View(GW_WQP_anal_daily)
 GW_WQP_Ba_NY = filter(GW_WQP_anal_daily, daily_mean < 11000 & daily_mean > 1)
 
 
-
-#Upload data
+#Or Upload data
 #SW_WQP_Ba_NY = 
 #GW_WQP_Ba_NY = 
-
 
 
 # NOW ANALYZE

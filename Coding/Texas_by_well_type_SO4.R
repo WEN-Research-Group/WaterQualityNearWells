@@ -177,10 +177,6 @@ unique(gw.wqp_data$MonitoringLocationTypeName)
 unique(gw.wqp_data$ResultStatusIdentifier)
 unique(gw.wqp_data$ResultMeasure.MeasureUnitCode)
 
-#gw.wqp_data_backup = gw.wqp_data
-#gw.wqp_data$ResultDetectionConditionText = as.character(gw.wqp_data$ResultDetectionConditionText)
-#unique(gw.wqp_data$ResultDetectionConditionText)
-
 #Cleaning data for all the states
 GW_WQP_Ba_Sr_SO4_clean = gw.wqp_data %>%
   rename(Latitude = LatitudeMeasure, Longitude = LongitudeMeasure, DataValue = ResultMeasureValue,
@@ -207,10 +203,6 @@ unique(GW_WQP_Ba_Sr_SO4_clean$ResultDetectionConditionText)
 unique(GW_WQP_Ba_Sr_SO4_clean$MonitoringLocationTypeName)
 unique(GW_WQP_Ba_Sr_SO4_clean$ResultStatusIdentifier)
 unique(GW_WQP_Ba_Sr_SO4_clean$ResultMeasure.MeasureUnitCode)
-
-#GW_WQP_Na_Cl_clean_backup = GW_WQP_Na_Cl_clean
-
-#SW_WQP_Na_clean = data.frame(SW_WQP_Na_clean_backup)
 
 #Do unit conversions 
 ind = which(GW_WQP_Ba_Sr_SO4_clean$ResultMeasure.MeasureUnitCode == "mg/L"|
@@ -339,7 +331,6 @@ groundwater_data = GW_SO4_Texas_merged
 #SURFACE
 
 #MARGINAL
-#sw.wq.distance = Well_spatial_analysis_compl(Texas_marginal_short,SW_SO4_Texas_merged)
 sw.wq.distance = Well_spatial_analysis_compl_0127(marginal_well_data,surface_water_data)
 
 #Plots
@@ -355,7 +346,6 @@ well_type = "marginal"
 Saving_figures_fun_exp(sw.wq.distance,anal, meas, state, type_w, well_type)
 
 #Save analysis results
-#saveRDS(sw.wq.distance,file = "./output/AGU/Texas/Texas_SW_Cl_marginal.rds", compress = FALSE)
 saveRDS(sw.wq.distance,file = paste("./output/AGU/",state,"/",state,"_",type_w,"_",anal,"_",well_type,".rds",sep=""), compress = FALSE)
 
 
@@ -388,7 +378,6 @@ saveRDS(sw.wq.distance,file = paste("./output/AGU/",state,"/",state,"_",type_w,"
 #GROUNDWATER
 
 #MARGINAL
-#gw.wq.distance = Well_spatial_analysis_compl(Texas_marginal_short,GW_Cl_Texas_merged)
 gw.wq.distance = Well_spatial_analysis_compl_0127(marginal_well_data,groundwater_data)
 
 type_w = "GW"
@@ -396,33 +385,28 @@ well_type = "marginal"
 Saving_figures_fun_exp(gw.wq.distance,anal, meas, state, type_w, well_type)
 
 #Save analysis results
-#saveRDS(gw.wq.distance,file = "./output/AGU/Texas/Texas_GW_Cl_marginal.rds", compress = FALSE)
 saveRDS(gw.wq.distance,file = paste("./output/AGU/",state,"/",state,"_",type_w,"_",anal,"_",well_type,".rds",sep=""), compress = FALSE)
 
 
 ### UNCONVENTIONAL
 
-#gw.wq.distance = Well_spatial_analysis_compl(enverus_og_well_curated,GW_Cl_Texas_merged)
 gw.wq.distance = Well_spatial_analysis_compl_0127(unconv_well_data,groundwater_data)
 
 well_type = "unconventional"
 Saving_figures_fun_exp(gw.wq.distance,anal, meas, state, type_w, well_type)
 
 #Save analysis results
-#saveRDS(gw.wq.distance,file = "./output/AGU/Texas/Texas_SW_Cl_unconv.rds", compress = FALSE)
 saveRDS(gw.wq.distance,file = paste("./output/AGU/",state,"/",state,"_",type_w,"_",anal,"_",well_type,".rds",sep=""), compress = FALSE)
 
 
 ### ORPHANED
 
-#gw.wq.distance = Well_spatial_analysis_compl(Texas_orphaned_clean,GW_Na_Texas_merged)
 gw.wq.distance = Well_spatial_analysis_compl_0127(orphan_well_data,groundwater_data)
 
 well_type = "orphaned"
 Saving_figures_fun_exp(gw.wq.distance,anal, meas, state, type_w, well_type)
 
 #Save analysis results
-#saveRDS(gw.wq.distance,file = "./output/AGU/Texas/Texas_SW_Cl_orphaned.rds", compress = FALSE)
 saveRDS(gw.wq.distance,file = paste("./output/AGU/",state,"/",state,"_",type_w,"_",anal,"_",well_type,".rds",sep=""), compress = FALSE)
 
 
@@ -487,13 +471,6 @@ SW_marg_val_sum = SW_marg %>%
   summarise(n_val = n()) %>%
   arrange(n_val)
 
-# SW_marg_nrs = merge(SW_marg, SW_marg_val_sum, by = "daily_mean")
-# SW_marg_nrs_f = filter(SW_marg_nrs, n_val < 180) #removed 500, 1000, 5000, 10000, 110000
-# plot(log(SW_marg_nrs_f$nearest_distance_m), log(SW_marg_nrs_f$daily_mean))
-# cor(log(SW_marg_nrs_f$nearest_distance_m), log(SW_marg_nrs_f$daily_mean)) #worse than with outlies
-# SW_marg = GW_orph_nrs_f[,c(1:16)]
-
-
 
 ### UNCONVENTIONAL
 
@@ -505,18 +482,6 @@ SW_unconv$well_type = "unconventional"
 
 plot(log(SW_unconv$nearest_distance_m), log(SW_unconv$daily_mean))
 cor(log(SW_unconv$nearest_distance_m), log(SW_unconv$daily_mean))
-
-# #Try remove that value that occurs a lot
-# SW_unconv_val_sum = SW_unconv %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# SW_unconv_nrs = merge(SW_unconv, SW_unconv_val_sum, by = "daily_mean")
-# SW_unconv_nrs_f = filter(SW_unconv_nrs, n_val < 100)
-# plot(log(SW_unconv_nrs_f$nearest_distance_m), log(SW_unconv_nrs_f$daily_mean))
-# cor(log(SW_unconv_nrs_f$nearest_distance_m), log(SW_unconv_nrs_f$daily_mean)) #worse than with outlies
-# #SW_unconv = SW_unconv_nrs_f[,c(1:16)]
 
 #Double check if duplicated site number samples are removed
 SW_unconv = SW_unconv[-which(SW_unconv$max_v - SW_unconv$min_v > 1000),] 
@@ -558,7 +523,6 @@ cor(log(SW_orph$nearest_distance_m), log(SW_orph$daily_mean))
 #Should Remove values with nearest distances above 161796
 
 SW_orph = SW_orph[-which(SW_orph$max_v - SW_orph$min_v > 1000),] 
-#SW_orph = filter(SW_orph, daily_mean < 50000)
 plot(log(SW_orph$nearest_distance_m), log(SW_orph$daily_mean))
 
 SW_orph_fx = SW_orph %>%
@@ -594,26 +558,6 @@ GW_marg$well_type = "marginal"
 plot(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
 cor(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
 
-# GW_marg = filter(GW_marg, nearest_distance_m < 6283100)
-# plot(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
-# cor(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
-# 
-# # #Try remove that value that occurs a lot
-# GW_marg_val_sum = GW_marg %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_marg_nrs = merge(GW_marg, GW_marg_val_sum, by = "daily_mean")
-# GW_marg_nrs_f = filter(GW_marg_nrs, n_val < 180) #removed 500, 1000, 5000, 10000, 110000
-# plot(log(GW_marg_nrs_f$nearest_distance_m), log(GW_marg_nrs_f$daily_mean))
-# cor(log(GW_marg_nrs_f$nearest_distance_m), log(GW_marg_nrs_f$daily_mean)) #worse than with outlies
-# GW_marg = GW_marg_nrs_f[,c(1:16)]
-
-# GW_marg = filter(GW_marg, nearest_distance_m > 1)
-# plot(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
-# 
-# dim(unique(GW_marg[,c("Latitude","Longitude", "Samplingdate")])) #38544 in dataset but 36571 unique combos
 GW_marg = GW_marg[-which(GW_marg$max_v - GW_marg$min_v > 1000),] #38517
 plot(log(GW_marg$nearest_distance_m), log(GW_marg$daily_mean))
 
@@ -645,33 +589,10 @@ GW_unconv = readRDS(file = paste("./output/AGU/",state,"/",state,"_",type_w,"_",
 GW_unconv$type_w = "GW"
 GW_unconv$well_type = "unconventional"
 
-#GW_unconv = filter(GW_unconv, nearest_distance_m < 6283100)
 plot(log(GW_unconv$nearest_distance_m), log(GW_unconv$daily_mean))
 cor(log(GW_unconv$nearest_distance_m), log(GW_unconv$daily_mean))
 
 GW_unconv = GW_unconv[-which(GW_unconv$max_v - GW_unconv$min_v > 1000),] 
-
-# ## #Try remove that value that occurs a lot
-# GW_unconv_val_sum = GW_unconv %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_unconv_nrs = merge(GW_unconv, GW_unconv_val_sum, by = "daily_mean")
-# GW_unconv_nrs_f = filter(GW_unconv_nrs, n_val < 180) #removed 500, 1000, 5000, 10000, 110000
-# plot(log(GW_unconv_nrs_f$nearest_distance_m), log(GW_unconv_nrs_f$daily_mean))
-# cor(log(GW_unconv_nrs_f$nearest_distance_m), log(GW_unconv_nrs_f$daily_mean)) #worse than with outlies
-# GW_unconv = GW_unconv_nrs_f[,c(1:16)]
-
-# GW_unconv_val_sum = GW_unconv %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_unconv_nrs = merge(GW_unconv, GW_unconv_val_sum, by = "daily_mean")
-# GW_unconv_nrs_f = filter(GW_unconv_nrs, n_val < 100)
-# GW_unconv = GW_unconv_nrs_f[,c(1:16)]
-# plot(log(GW_unconv$nearest_distance_m), log(GW_unconv$daily_mean))
 
 GW_unconv_fx = GW_unconv %>%
   group_by(Latitude, Longitude, Samplingdate) %>%
@@ -708,28 +629,6 @@ cor(log(GW_orph$nearest_distance_m), log(GW_orph$daily_mean))
 
 GW_orph = GW_orph[-which(GW_orph$max_v - GW_orph$min_v > 1000),] 
 
-# ## #Try remove that value that occurs a lot
-# GW_orph_val_sum = GW_orph %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_orph_nrs = merge(GW_orph, GW_orph_val_sum, by = "daily_mean")
-# GW_orph_nrs_f = filter(GW_orph_nrs, n_val < 180) #removed 500, 1000, 5000, 10000, 110000
-# plot(log(GW_orph_nrs_f$nearest_distance_m), log(GW_orph_nrs_f$daily_mean))
-# cor(log(GW_orph_nrs_f$nearest_distance_m), log(GW_orph_nrs_f$daily_mean)) #worse than with outlies
-# GW_orph = GW_orph_nrs_f[,c(1:16)]
-
-# GW_orph_val_sum = GW_orph %>%
-#   group_by(daily_mean) %>%
-#   summarise(n_val = n()) %>%
-#   arrange(n_val)
-# 
-# GW_orph_nrs = merge(GW_orph, GW_orph_val_sum, by = "daily_mean")
-# GW_orph_nrs_f = filter(GW_orph_nrs, n_val < 100)
-# GW_orph = GW_orph_nrs_f[,c(1:16)]
-# plot(log(GW_orph$nearest_distance_m), log(GW_orph$daily_mean))
-
 GW_orph_fx = GW_orph %>%
   group_by(Latitude, Longitude, Samplingdate) %>%
   summarise(n = sum(n), daily_mean=mean(daily_mean), daily_median = mean(daily_median), min_v=min(min_v), max_v=max(max_v),
@@ -758,13 +657,4 @@ cor((GW_orph$nearest_distance_m), log(GW_orph$daily_mean))
 Geospatial_result_TX_SO4 = rbind(SW_marg,SW_unconv,SW_orph,GW_marg,GW_unconv,GW_orph)
 
 saveRDS(Geospatial_result_TX_SO4,file = "Geospatial_results_TX_SO4.rds", compress = FALSE)
-
-
-
-
-
-
-
-
-
 

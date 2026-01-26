@@ -72,13 +72,6 @@ anal = "Cl"
 #Upload cleaned data and extract NY state
 SW_WQP_anal = readRDS(file=paste("sw_wqp_wq_all_curated_",anal,".rds",sep=""))
 
-#Those are correct
-#anal ="Na"
-#SW_WQP_anal_Na = readRDS(file=paste("sw_wqp_wq_all_curated_",anal,".rds",sep=""))
-#anal ="Cl"
-#SW_WQP_anal_Cl = readRDS(file=paste("sw_wqp_wq_all_curated_",anal,".rds",sep=""))
-#View(SW_WQP_anal_Na)
-#View(SW_WQP_anal_Cl)
 
 #Separate Texas samples
 SW_WQP_anal_State = filter(SW_WQP_anal, State=="Pennsylvania")
@@ -510,8 +503,4 @@ plot(log(GW_orph$nearest_distance_m), log(GW_orph$daily_mean))
 Geospatial_result_PA_Cl = rbind(SW_marg,SW_unconv,SW_orph,GW_marg,GW_unconv,GW_orph)
 
 saveRDS(Geospatial_result_PA_Cl,file = "Geospatial_results_PA_Cl.rds", compress = FALSE)
-
-
-
-
 

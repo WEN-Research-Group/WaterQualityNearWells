@@ -91,37 +91,6 @@ View(SW_WQP_Ba_CO)
 ### COGCC
 #Remove GARFIELD data
 
-
-# From Tao's code
-
-# cogcc_wq_curated <- cogcc_wq_raw %>%
-#   # select only non-NA SC data from relevant surface water and
-#   # groundwater samples
-#   filter(param_description %in%
-#            c("BARIUM", "STRONTIUM", "SULFATE"),
-#          facility_type %in%
-#            c("Creek","Domestic Well", "Ground Water", "Groundwater",
-#              "Monitoring Well", "Pond", "River", "Seep", "Spring",
-#              "Surface Water"),
-#          !matrix %in% c("GAS", "LIQUID", "SOIL"),
-#          !is.na(result_value),
-#          !units == "mg/L as CaCO3") %>%
-#   # convert all units to ug/L
-#   mutate(result_value = ifelse(units %in% c("mg/Kg","mg/l","mg/L", "MG/L"),
-#                                result_value * 1000, result_value)) %>%
-#   mutate(units = "ug/L") %>%
-#   # add a column 'State'
-#   mutate(State="Colorado") %>%
-#   # select only needed columns and rename them in a way consistent with others
-#   select(c(facility_id, facility_type, latitude83, longitude83, State,
-#            county,sample_date,result_value, param_description)) %>%
-#   rename(SiteCode = facility_id, Latitude = latitude83, Longitude = longitude83,
-#          County = county, Samplingdate = sample_date, Analyte=param_description,
-#          SampleMedium = facility_type, DataValue = result_value) %>%
-#   # derive the day of sampling date
-#   mutate(Samplingdate = floor_date(Samplingdate, "day"))
-
-
 cogcc_wq_raw <- readxl::read_xlsx(path="./input/COGCC_WQ/COGCC_BasicQuery.xlsx",
                                   na="") %>% janitor::clean_names()
 
