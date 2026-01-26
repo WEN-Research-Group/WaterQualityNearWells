@@ -72,6 +72,10 @@ corr_matrix = Data %>%
 ```
  We performed hierarchical clustering on correlation results using the heatmap function in R's stats package. This function applies agglomerative clustering using Euclidean distance, iteratively merging the most similar clusters and displaying results via dendrograms. Rows in the correlation matrix were reordered based on clustering to group similar correlation patterns together.
 
+## Requirements
+
+- R version 4.4.0 or higher
+- Libraries needed: *dataRetrieval, data.table, reshape2, leaflet, DT, usmap, ggplot2, scales, dplyr, lubridate, sp, FNN, htmlwidgets, ggpubr, rstudioapi, janitor*
 
 ## Citation
 
