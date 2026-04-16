@@ -3,7 +3,7 @@
 
 This repository contains all data and code for the manuscript:
 
-**Basijokaite, R., Kang, M., & Wen, T. (2026). Oil and gas wells leave measurable impacts on U.S. surface and groundwater quality. *Science Advances*, under review.**
+**Basijokaite, R., Kang, M., & Wen, T. (2026). Oil and gas wells leave measurable impacts on U.S. surface and groundwater quality. *Environmental Research Letters*, under review.**
 
 
 ## Project Overview
