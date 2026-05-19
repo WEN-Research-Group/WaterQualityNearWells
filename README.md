@@ -83,8 +83,7 @@ corr_matrix = Data %>%
 
 If you use this code or data, please cite:
 ```
-Basijokaite, R., Kang, M., & Wen, T. (2026). Oil and gas wells leave measurable impacts on U.S.
-surface and groundwater quality. Science Advances [under review]
+Basijokaite, R., Kang, M., & Wen, T. (2026). Large-sample evidence for water quality associations with marginal, orphaned, and unconventional oil and gas wells across the United States. Environmental Research Letters [under review]
 ```
 
 ## Contact
