@@ -1,9 +1,9 @@
-# Oil and gas wells leave measurable impacts on U.S. surface and groundwater quality
+# Large-sample evidence for water quality associations with marginal, orphaned, and unconventional oil and gas wells across the United States 
 
 
 This repository contains all data and code for the manuscript:
 
-**Basijokaite, R., Kang, M., & Wen, T. (2026). Oil and gas wells leave measurable impacts on U.S. surface and groundwater quality. *Environmental Research Letters*, under review.**
+**Basijokaite, R., Kang, M., & Wen, T. (2026). Large-sample evidence for water quality associations with marginal, orphaned, and unconventional oil and gas wells across the United States . *Environmental Research Letters*, under review.**
 
 
 ## Project Overview
@@ -19,6 +19,8 @@ monitoring strategies for both legacy and active sites.
 
 ## Repository Structure
 ```
+├── DataPreprocessing/        # Data preprocessing and download from state and national databases
+│   ├── ...
 ├── Data/        # Cleaned and processed water quality data. Each file contains analyte sampling information and associated spatial proxy metrics 
 │   ├── CO/                 
 │   ├── NY/          
