@@ -21,7 +21,7 @@ monitoring strategies for both legacy and active sites.
 ```
 ├── DataPreprocessing/        # Data preprocessing and download from state and national databases
 │   ├── ...
-├── Data/        # Cleaned and processed water quality data. Each file contains analyte sampling information and associated spatial proxy metrics 
+├── Data/                     # Cleaned and processed water quality data. Each file contains analyte sampling information and associated spatial proxy metrics 
 │   ├── CO/                 
 │   ├── NY/          
 |   ├── PA/  
@@ -29,6 +29,11 @@ monitoring strategies for both legacy and active sites.
 ├── Coding/
 │   ├── Well_spatial_analysis_compl_0127.R   # Main function used in R scripts below to calculate 4 spatial proxies used in the manuscript
 │   ├── [State]_by_well_type_[analyte].R     # Analysis was conducted separately for each state, analyte, water source and well type
+├── Figures/                     # R scripts used to generate figures
+│   ├── ...
+├── NaCl_analysis/               # Na/Cl molar ratio analysis, Cl trends over time
+│   ├── Na_Cl_data_comb_fun.R    # Function to merge Na and Cl datasets based on Lat/Long and sampling date
+│   ├── NaCl_analysis.R          # Na/Cl molar ratio vs distance to the closest well
 └── README.md
 ```
 
@@ -88,7 +93,7 @@ Basijokaite, R., Kang, M., & Wen, T. (2026). Large-sample evidence for water qua
 
 ## Contact
 
-For questions, please contact Ruta Basijokaite at rbasijok@syr.edu.
+For questions, please contact Ruta Basijokaite at ruta.basijokaite@gmail.com.
 
 ## Acknowledgments
 
