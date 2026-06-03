@@ -1,9 +1,9 @@
-# Large-sample evidence for water quality associations with marginal, orphaned, and unconventional oil and gas wells across the United States 
+# Large-sample evidence for surface and groundwater quality associations with marginal, orphaned, and unconventional oil and gas wells across the United States 
 
 
 This repository contains all data and code for the manuscript:
 
-**Basijokaite, R., Kang, M., & Wen, T. (2026). Large-sample evidence for water quality associations with marginal, orphaned, and unconventional oil and gas wells across the United States . *Environmental Research Letters*, under review.**
+**Basijokaite, R., Kang, M., & Wen, T. (2026). Large-sample evidence for surface and groundwater quality associations with marginal, orphaned, and unconventional oil and gas wells across the United States . *Environmental Research Letters*, under review.**
 
 
 ## Project Overview
@@ -29,6 +29,7 @@ monitoring strategies for both legacy and active sites.
 ├── Coding/
 │   ├── Well_spatial_analysis_compl_0127.R   # Main function used in R scripts below to calculate 4 spatial proxies used in the manuscript
 │   ├── [State]_by_well_type_[analyte].R     # Analysis was conducted separately for each state, analyte, water source and well type
+│   ├── Spatial_permutation.R                # Spatial permutation test to analyze if correlation results are non-spurious
 ├── Figures/                     # R scripts used to generate figures
 │   ├── ...
 ├── NaCl_analysis/               # Na/Cl molar ratio analysis, Cl trends over time
@@ -88,7 +89,7 @@ corr_matrix = Data %>%
 
 If you use this code or data, please cite:
 ```
-Basijokaite, R., Kang, M., & Wen, T. (2026). Large-sample evidence for water quality associations with marginal, orphaned, and unconventional oil and gas wells across the United States. Environmental Research Letters [under review]
+Basijokaite, R., Kang, M., & Wen, T. (2026). Large-sample evidence for surface and groundwater quality associations with marginal, orphaned, and unconventional oil and gas wells across the United States. Environmental Research Letters [under review]
 ```
 
 ## Contact
