@@ -3,7 +3,7 @@
 
 This repository contains all data and code for the manuscript:
 
-**Basijokaite, R., Kang, M., & Wen, T. (2026). Large-sample evidence for surface and groundwater quality associations with marginal, orphaned, and unconventional oil and gas wells across the United States . *Environmental Research Letters*, under review.**
+**Basijokaite, R., Kang, M., & Wen, T. (2026). Large-sample evidence for surface and groundwater quality associations with marginal, orphaned, and unconventional oil and gas wells across the United States . *Environmental Research Letters*, DOI: 10.1088/1748-9326/ae7c17**
 
 
 ## Project Overview
@@ -89,7 +89,7 @@ corr_matrix = Data %>%
 
 If you use this code or data, please cite:
 ```
-Basijokaite, R., Kang, M., & Wen, T. (2026). Large-sample evidence for surface and groundwater quality associations with marginal, orphaned, and unconventional oil and gas wells across the United States. Environmental Research Letters [under review]
+Basijokaite, R., Kang, M., & Wen, T. (2026). Large-sample evidence for surface and groundwater quality associations with marginal, orphaned, and unconventional oil and gas wells across the United States. Environmental Research Letters, DOI: 10.1088/1748-9326/ae7c17
 ```
 
 ## Contact
